@@ -57,10 +57,33 @@ async function run() {
   })
 
   // update
-  app.get('/card/:id', async (req, res) => {
+  app.get('/cards/:id', async (req, res) => {
     const id = req.params.id;
     const query = {_id: new ObjectId(id)}
     const result = await cardCollection.findOne(query)
+    res.send(result)
+  })
+
+  app.put('/card/:id',async (req, res) => {
+    const id = req.params.id;
+    const filter = {_id: new ObjectId(id)}
+    const options = {upset: true};
+    const updatedSpot=req.body
+    const spot = {
+      $set: {
+        cuntryname: updatedSpot.cuntryname,
+        spotname: updatedSpot.spotname,
+        averagecost: updatedSpot.averagecost,
+        season:updatedSpot.season,
+         photo: updatedSpot.photo,
+         traveltime: updatedSpot.traveltime,
+         totaVisitors: updatedSpot.totaVisitors,
+         description: updatedSpot.description,
+         location: updatedSpot.location
+      }
+    }
+
+    const result = await cardCollection.updateOne(filter,spot, options);
     res.send(result)
   })
 
