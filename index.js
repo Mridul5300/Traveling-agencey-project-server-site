@@ -38,6 +38,8 @@ async function run() {
          res.send(result);
     })
 
+    
+
    app.post('/card', async(req, res) => {
     const AddNewSpot=req.body;
     console.log(AddNewSpot);
@@ -45,8 +47,14 @@ async function run() {
     res.send(result);
    });
 
-
-
+// read email
+   app.get('/card/:email',async (req, res) => {
+    const email = req.params.email
+    console.log(email);
+    const query = {email:(email)};
+    const result = await cardCollection.find(query).toArray()
+    res.send(result)
+  })
     
     // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });
