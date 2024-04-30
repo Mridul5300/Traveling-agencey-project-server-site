@@ -30,6 +30,7 @@ async function run() {
 
 
     const cardCollection = client.db('cardDB').collection('card');
+    const countryCollection = client.db('countryDB').collection('country');
 
 
     app.get('/card', async( req, res) => {
@@ -38,7 +39,16 @@ async function run() {
          res.send(result);
     })
 
-    
+    // counrty section
+
+    app.get('/country', async( req, res) => {
+      const cursor= countryCollection.find();
+      const result = await cursor.toArray();
+      res.send(result);
+ })
+
+
+
 
    app.post('/card', async(req, res) => {
     const AddNewSpot=req.body;
@@ -85,7 +95,18 @@ async function run() {
 
     const result = await cardCollection.updateOne(filter,spot, options);
     res.send(result)
-  })
+  });
+
+
+  // app.get('/carddetails/:id', async (req, res) => {
+  //   const id = req.params.id;
+  //   const query = {_id: new ObjectId(id)}
+  //   const result = await cardCollection.findOne(query)
+  //   res.send(result)
+  // })
+
+
+
 
   // dellete Operation
   app.delete('/card/:id', async(req, res) => {
